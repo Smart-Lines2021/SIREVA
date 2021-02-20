@@ -24,31 +24,23 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name' => 'required',
-            'email' => ['required', Rule::unique('users')] //Obtenemos del parametro de la ruta la id del usuario
+        return [
+            'name' => 'required|max:18',
+            'empresa_id' => 'required',
+            'password' => 'required',
+            'email' => 'required|unique:users', //Obtenemos del parametro de la ruta la id del usuario
+           
         ];
-        if ($this->filled('password')) { //Nos sirve para saber si esta lleno
-            $rules['password'] = ['confirmed', 'min:6'];
-        }
-
-        if ($this->method() === 'PUT') { //Si es para actualizar
-            $rules = [
-                'name' => 'required',
-                'email' => ['required', Rule::unique('users')->ignore($this->route('usuario')->id)] //Obtenemos del parametro de la ruta la id del usuario
-            ];
-            if ($this->filled('password')) { //Nos sirve para saber si esta lleno
-                $rules['password'] = ['confirmed', 'min:6'];
-            }
-        }
-        return $rules;
     }
     public function messages()
     {
         return [
             'email.unique' => 'El correo electronico ya esta en uso',
             'email.required' => 'Es necesario ingresar un correo electronico',
-            'name.required' => 'Es necesario ingresar un nombre de usuario',
+            'name.required' => 'Es necesario ingresar el nombre del usuario',
+            'name.required' => 'Es necesario ingresar una contraseña para el usuario',
+            'empresa_id.required' => 'No se encontro la empresa a la cual pertenece el usuario',
+            
         ];
     }
 }

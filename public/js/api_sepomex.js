@@ -1,5 +1,7 @@
+
+
 $(document).ready(function(){
-    $("#estadoId").change(function(){
+    $("#estados").change(function(){
       var estado = $(this).val();
     
       $.get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/'+estado, function(data){

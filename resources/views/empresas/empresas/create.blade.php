@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('layouts.layout')
 @section('title')
 <h1 class="m-0 text-dark">Crear empresa</h1>
 @endsection
@@ -20,11 +20,11 @@
                 </div>
             </div>
             <div class="card-body" style="display: block;">
-                <form method="POST" action="{{route('rh.proveedores.store')}}">
+                <form method="POST" action="{{route('empresas.store')}}">
                     @csrf
                     <div class="form-group">
                         <label for="razon_social">Razón social:</label>
-                        <input type="number" name="no_proveedor" value="{{old('razon_social')}}" class="form-control"
+                        <input type="text" name="razon_social" value="{{old('razon_social')}}" class="form-control"
                             placeholder="Ingrese razón social de la empresa" required minlegth="1" maxlength="120"
                             title="Ejemplo:Minera Peñasquito">
                     </div>
@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label for="telefono">Telefono:</label>
                         <input type="text" name="telefono" class="form-control"
-                            placeholder="Ingrese el telefono del cliente" required pattern="[0-9]{4,12}" minlegth="4"
+                            placeholder="Ingrese el telefono del cliente" pattern="[0-9]{4,12}" minlegth="4"
                             maxlength="12"
                             title="Solo se permiten letras y números. Tamaño mínimo: 4. Tamaño máximo: 12"
                             value="{{old('telefono')}}">
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label for="correo">Correo:</label>
                         <input type="text" name="correo" class="form-control"
-                            placeholder="Ingrese el correo del cliente" required
+                            placeholder="Ingrese el correo del cliente" 
                             pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s/.-_@0-9]{4,80}" minlegth="4" maxlength="80"
                             title="Solo se permiten letras y números. Tamaño mínimo: 4. Tamaño máximo: 80"
                             value="{{old('correo')}}">

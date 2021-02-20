@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Empresa\Empresa;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 
 class User extends Authenticatable
 {
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'empresa_id', 'activo'
     ];
 
 
@@ -39,6 +41,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class,'empresa_id','id',);
+    }
+
+
     public function roles()
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
@@ -46,8 +54,10 @@ class User extends Authenticatable
 
     public function authorizeRoles($roles)
     {
-        abort_unless($this->hasAnyRole($roles), 401);
-        return true;
+        if ($this->hasAnyRole($roles)) {
+            return true;
+        }
+        abort(401, 'Esta acción no está autorizada.');
     }
     public function hasAnyRole($roles)
     {
@@ -64,7 +74,6 @@ class User extends Authenticatable
         }
         return false;
     }
-
     public function hasRole($role)
     {
         if ($this->roles()->where('name', $role)->first()) {

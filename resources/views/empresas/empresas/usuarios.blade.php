@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Empresas</h1>
+<h1 class="m-0 text-dark">Usuarios</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">
@@ -15,9 +15,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Tabla de Empresas Registrados</h3>
-                    <a href="{{route('empresas.create')}}" class="btn btn-secondary float-right">
-                        <i class="fa fa-plus"></i> Añadir Empresas
+                    <h3 class="card-title">Usuarios Registrados de la empresa {{$empresa->razon_social}}</h3>
+                    <a href="{{route('empresas.usuarios.create',Crypt::encryptString($empresa->id))}}" class="btn btn-secondary float-right">
+                        <i class="fa fa-plus"></i> Añadir Usuario
                     </a>
                 </div>
                 <!-- /.card-header -->
@@ -26,41 +26,23 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Razón Social</th>
-                                <th>Domicilio</th>
-                                <th>Teléfono</th>
+                                <th>Nombre</th>
                                 <th>Correo</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($empresas as $empresa)
+                            @foreach($usuarios as $usuario)
                             <tr>
-                                <td>{{$empresa->id}}</td>
+                                <td>{{$usuario->id}}</td>
                                 <td>
-                                    {{$empresa->razon_social}}
+                                    {{$usuario->name}}
                                 </td>
                                 <td>
-                                    @if($empresa->domicilio == null)
-                                       Dato no registrado
-                                    @else
-                                    {{$empresa->domicilio}}
-                                    @endif
+                                  {{$usuario->email}}
                                 </td>
-                                <td>
-                                    @if($empresa->telefono == null)
-                                    Dato no registrado
-                                    @else
-                                    {{$empresa->telefono}}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($empresa->correo == null)
-                                    Dato no registrado
-                                    @else
-                                    {{$empresa->correo}}
-                                    @endif
-                                </td>
+                               
+
                                 <td>
                                     <center>
                                         <div class="btn-group">
@@ -73,31 +55,13 @@
                                             <div class="dropdown-menu" role="menu">
 
 
-
                                                 <a class="dropdown-item"
-                                                    href="{{route('empresas.usuarios',Crypt::encryptString($empresa->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Usuarios </a>
-
-                                                <div class="dropdown-divider"></div>
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.show',Crypt::encryptString($empresa->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Candidatos</a>
-                                                <div class="dropdown-divider"></div>
-
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.edit',Crypt::encryptString($empresa->id))}}"><i
+                                                    href="#"><i
                                                         class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
-
-
-                                                <a class="dropdown-item" data-target="#modal-destroy-{{$empresa->id}}"
+                                                <a class="dropdown-item" data-target="#modal-destroy-{{$usuario->id}}"
                                                     data-toggle="modal"><i class="fas fa-user-times"></i> Eliminar</a>
                                                 <div class="dropdown-divider"></div>
-
-
-
                                             </div>
                                         </div>
                                     </center>

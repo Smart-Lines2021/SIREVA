@@ -1,77 +1,72 @@
-@extends('layouts.app')
-
+@extends('layouts.layout')
+@section('title')
+<h1 class="m-0 text-dark">Crear Usuario</h1>
+@endsection
+@section('content-header')
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{{route('home')}}">Inicio</a></li>
+    <li class="breadcrumb-item active">Administración</li>
+</ol>
+@stop
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Nuevo Usuario</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
                 </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <form method="POST" action="{{route('admin.usuarios.store')}}">
+                    @csrf
+                    <input name="empresa_id" value="{{$empresa->id}}">
+                    <div class="form-group">
+                        <label for="name">Nombre: </label>
+                        <input type="text" name="name" value="{{old('name')}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electronico: </label>
+                        <input type="email" name="email" value="{{old('email')}}" class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Contraseña: </label>
+                            <input type="password" id="password" name="password" value="{{old('password')}}"
+                                class="form-control">
+                            <input type="checkbox" onclick="mostrarPassword();"> Mostrar contraseña
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="name">&nbsp; </label>
+                            <button type="button" onclick="rellenarPassword();"
+                                class="btn btn-block btn-outline-primary"> <i class="fas fa-sync-alt"></i> Generar
+                                Contraseña</button>
+                        </div>
+                    </div>
+                    
+
+
+
+                    <button class="btn btn-info btn-block">Crear empresa</button>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
 @endsection
+@push('styles')
+{{-- Incluimos los links del diseño de la tabla de un solo archivo --}}
+
+@endpush
+@push('scripts')
+{{-- Incluimos los scripts de la tabla de un solo archivo --}}
+<script src="{{asset('js/password.js')}}"></script>
+<script>
+    function rellenarPassword(){
+        document.getElementById('password').value=getPassword();
+    }
+</script>
+@endpush

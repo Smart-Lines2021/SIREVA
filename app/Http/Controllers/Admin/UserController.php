@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class UserController extends Controller
 {
@@ -12,13 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+    
     public function index()
     {
-          //Aplicamos Politica de Acceso al metodo correspondiente
-          $this->authorize('view',new User);
           $usuarios = User::where('activo','=',1)->get();
-          return view('admin.usuarios.index',[
-              'usuarios'=>$usuarios]);
+          return view('admin.usuarios.index',compact('usuarios'));
     }
 
     /**
@@ -28,7 +34,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.register');
     }
 
     /**
@@ -37,9 +43,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $usuario = User::create($request->validated());
+        $usuario->password=Hash::make($request->get('password'));
+        $usuario->save();
+        $usuario->roles()->attach(2);
+        //asignamos roles
+      
+        return redirect()->route('admin.usuarios.index')->with('mensaje','Se ha creado un nuevo usuario');
     }
 
     /**

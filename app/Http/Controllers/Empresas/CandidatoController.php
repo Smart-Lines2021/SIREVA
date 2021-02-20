@@ -4,9 +4,19 @@ namespace App\Http\Controllers\Empresas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Admin\Afiliacion;
+use App\Admin\TipoCandidato;
+use App\Admin\Sexo;
+use App\Empresa\Candidato;
+use GuzzleHttp\Client;
+use App\Http\Requests\Empresa\CandidatoRequest;
 
 class CandidatoController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class CandidatoController extends Controller
      */
     public function index()
     {
-        return view('empresas.candidatos.index');
+        $candidatos = Candidato::where('activo','=',1)->get();
+        return view('empresas.candidatos.index',compact('candidatos'));
     }
 
     /**
@@ -24,7 +35,22 @@ class CandidatoController extends Controller
      */
     public function create()
     {
-        //
+        $client = new Client(); //GuzzleHttp\Client
+        $url = "https://api-sepomex.hckdrk.mx/query/get_estados";
+        $response = $client->request('GET', $url, [
+            'verify'  => false,
+        ]);
+
+        $estados = json_decode($response->getBody());
+
+
+        $afiliaciones = Afiliacion::where('activo', '=', 1)->get();
+        $tipos_de_candidatos = TipoCandidato::where('activo', '=', 1)->get();
+        $sexos = Sexo::where('activo', '=', 1)->get();
+        return view(
+            "empresas.candidatos.create",
+            compact('afiliaciones', 'tipos_de_candidatos', 'sexos', 'estados')
+        );
     }
 
     /**
@@ -33,9 +59,12 @@ class CandidatoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CandidatoRequest $request)
     {
-        //
+        $candidato = Candidato::create($request->validated());
+        $candidato->telefono_celular = $request->get('telefono_celular');
+        $candidato->save();
+        return redirect()->route('empresas.index')->with('mensaje', 'Se ha registrado una nuevo candidato');
     }
 
     /**

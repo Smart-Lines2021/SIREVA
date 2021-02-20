@@ -15,9 +15,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Tabla de Empresas Registrados</h3>
-                    <a href="{{route('empresas.create')}}" class="btn btn-secondary float-right">
-                        <i class="fa fa-plus"></i> Añadir Empresas
+                    <h3 class="card-title">Candidatos Registrados de la empresa {{$empresa->razon_social}}</h3>
+                    <a href="{{route('candidatos.empresas',Crypt::encryptString($empresa->id))}}" class="btn btn-secondary float-right">
+                        <i class="fa fa-plus"></i> Añadir Candidato
                     </a>
                 </div>
                 <!-- /.card-header -->
@@ -26,41 +26,52 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Razón Social</th>
+                                <th>CURP</th>
+                                <th>Nombre</th>
+                                <th>Sexo</th>
                                 <th>Domicilio</th>
                                 <th>Teléfono</th>
                                 <th>Correo</th>
+                                <th>Afiliación</th>
+                                <th>Tipo de Candidato</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($empresas as $empresa)
+                            @foreach($candidatos as $candidato)
                             <tr>
-                                <td>{{$empresa->id}}</td>
+                                <td>{{$candidato->id}}</td>
+                                <td>{{$candidato->curp}}</td>
                                 <td>
-                                    {{$empresa->razon_social}}
+                                    {{$candidato->nombre}} {{$candidato->apellido_paterno}}
+                                    {{$candidato->apellido_materno}}
                                 </td>
+                                <td>{{$candidato->sexo->nombre}}</td>
                                 <td>
-                                    @if($empresa->domicilio == null)
-                                       Dato no registrado
-                                    @else
-                                    {{$empresa->domicilio}}
+                                    {{$candidato->calle}}, {{$candidato->numero_exterior }},
+                                    @if($candidato->numero_interior != null)
+                                        {{$candidato->numero_interior }},
                                     @endif
+                                   
+                                    <br>{{$candidato->colonia}}, {{$candidato->municipio}} {{$candidato->estado}}
                                 </td>
+                                <td>{{$candidato->telefono_celular}}</td>
                                 <td>
-                                    @if($empresa->telefono == null)
+                                    @if($candidato->correo == null)
                                     Dato no registrado
                                     @else
-                                    {{$empresa->telefono}}
+                                    {{$candidato->correo}}
                                     @endif
                                 </td>
+
                                 <td>
-                                    @if($empresa->correo == null)
-                                    Dato no registrado
-                                    @else
-                                    {{$empresa->correo}}
-                                    @endif
+                                    {{$candidato->afiliacion->nombre}}
                                 </td>
+
+                                <td>
+                                    {{$candidato->tipo_candidato->nombre}}
+                                </td>
+
                                 <td>
                                     <center>
                                         <div class="btn-group">
@@ -72,14 +83,6 @@
                                             </button>
                                             <div class="dropdown-menu" role="menu">
 
-
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.usuarios',Crypt::encryptString($empresa->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Usuarios </a>
-
-                                                <div class="dropdown-divider"></div>
-
                                                 <a class="dropdown-item"
                                                     href="{{route('empresas.show',Crypt::encryptString($empresa->id))}}"><i
                                                         class="fas fa-user-edit"></i> Candidatos</a>
@@ -90,14 +93,9 @@
                                                     href="{{route('empresas.edit',Crypt::encryptString($empresa->id))}}"><i
                                                         class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
-
-
                                                 <a class="dropdown-item" data-target="#modal-destroy-{{$empresa->id}}"
                                                     data-toggle="modal"><i class="fas fa-user-times"></i> Eliminar</a>
                                                 <div class="dropdown-divider"></div>
-
-
-
                                             </div>
                                         </div>
                                     </center>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Role;
+use Illuminate\Support\Facades\Crypt;
 use App\Empresa\Empresa;
 
 class UserController extends Controller
@@ -32,7 +33,7 @@ class UserController extends Controller
     public function usuariosEmpresas()
     {
         $usuarios = User::where('activo','=',1)->where('empresa_id','>',1)->get();
-        return view('admin.usuarios.index',compact('usuarios'));
+        return view('admin.usuarios.index2',compact('usuarios'));
     }
 
     /**
@@ -108,5 +109,53 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createUsuarioEmpresa()
+    {  
+        $empresas= Empresa::where('activo','=',1)->where('id','>',1)->get();
+        $roles= Role::get();
+        return view('auth.register2',compact('empresas','roles'));
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store2(UserRequest $request)
+    {   
+        $usuario = User::create($request->validated());
+        $usuario->password=Hash::make($request->get('password'));
+        $usuario->save();
+        $usuario->roles()->attach(2);
+        
+        return redirect()->route('admin.usuarios.empresas')->with('mensaje','Se ha creado un nuevo usuario');
+    }
+
+    public function createUsuarioPorEmpresa($id)
+    {  
+        $id = Crypt::decryptString($id);
+        $empresa = Empresa::findOrFail($id);
+        return view('auth.register3',compact('empresa'));
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store3(UserRequest $request)
+    {   
+        $usuario = User::create($request->validated());
+        $usuario->password=Hash::make($request->get('password'));
+        $usuario->save();
+        $usuario->roles()->attach(2);
+        
+        return redirect()->route('empresas.usuarios',Crypt::encryptString($request->get('empresa_id')))->with('mensaje','Se ha creado un nuevo usuario');
     }
 }

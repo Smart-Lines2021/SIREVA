@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Crear Usuario SEZAC</h1>
+<h1 class="m-0 text-dark">Crear Usuario {{$empresa->razon_social}}</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="card-body" style="display: block;">
-                <form method="POST" action="{{route('admin.usuarios.store')}}">
+                <form method="POST" action="{{route('store3.usuarios.empresas')}}">
                     @csrf
 
 
@@ -46,12 +46,9 @@
                                 Contraseña</button>
                         </div>
                     </div>
+
+                      <input type="hidden" value="{{$empresa->id}}" name="empresa_id">
                    
-                    <input type="hidden" name="empresa_id" value="1">
-                  
-                    
-
-
                     <button class="btn btn-info btn-block">Crear Usuario</button>
                 </form>
 
@@ -76,17 +73,7 @@
     $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
-    $("#roles").on('change', function() {
-        var selectValue = $(this).val();
-        if(selectValue=== "2"){
-            $("#divempresa").show();
-            $("#empresa_input").hide();
-            $('#empresas').prop('required',true);
-        } else{
-            $("#divempresa").hide();
-            $('#roles').prop('required',false);
-        }
-    }).change();
+    
 
 });
 

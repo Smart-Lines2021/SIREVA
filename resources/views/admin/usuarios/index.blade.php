@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Usuarios</h1>
+<h1 class="m-0 text-dark">Usuarios SEZAC</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">

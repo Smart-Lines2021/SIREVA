@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="card-body" style="display: block;">
-                <form method="POST" action="{{route('admin.usuarios.store')}}">
+                <form method="POST" action="{{route('store.usuarios.empresas')}}">
                     @csrf
 
 
@@ -46,8 +46,23 @@
                                 Contraseña</button>
                         </div>
                     </div>
+
+                    <div class="form-group ">
+                        <label for="cargo_id">Empresas</label>
+                        <select class="form-control select2" id="empresa_id"
+                            data-placeholder="Seleccione empresa" style="width: 100%;"
+                            name="empresa_id" required>
+                            <option selected="selected" value="">Seleccione empresa</option>
+                            @foreach ($empresas as $empresa)
+                            <option {{ old('empresa_id') == $empresa->id ? "selected" : "" }}
+                                value="{{$empresa->id}}">
+                                {{$empresa->razon_social}} </option>
+                            @endforeach
+
+                        </select>
+                    </div>
                    
-                    <input type="hidden" name="empresa_id" value="1">
+                 
                   
                     
 

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Usuarios</h1>
+<h1 class="m-0 text-dark">Usuarios Empresas</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">
@@ -15,8 +15,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Usuarios Registrados de la empresa {{$empresa->razon_social}}</h3>
-                    <a href="{{route('admin.usuarios.por.empresas',Crypt::encryptString($empresa->id))}}" class="btn btn-secondary float-right">
+                    <h3 class="card-title">Tabla de Usuarios Registrados</h3>
+                    <a href="{{route('create.usuarios.empresas')}}" class="btn btn-secondary float-right">
                         <i class="fa fa-plus"></i> Añadir Usuario
                     </a>
                 </div>
@@ -28,7 +28,9 @@
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Correo</th>
-                                <th>Opciones</th>
+                                <th>Empresa</th>
+                                <th>Tipo de Usuario</th>
+                                <td>Opciones</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,31 +39,35 @@
                                 <td>{{$usuario->id}}</td>
                                 <td>
                                     {{$usuario->name}}
+                                    
                                 </td>
                                 <td>
-                                  {{$usuario->email}}
+                                    {{$usuario->empresa->razon_social}}
                                 </td>
-                               
-
+                                <td>
+                                        {{$usuario->email}}
+                                
+                                </td>
+                                <td>
+                                    @foreach ($usuario->roles as $rol)
+                                        {{$rol->name}}
+                                    @endforeach
+                                </td>
                                 <td>
                                     <center>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info btn-flat">Opciones</button>
-                                            <button type="button"
-                                                class="btn btn-info btn-flat dropdown-toggle dropdown-icon"
-                                                data-toggle="dropdown">
+                                            <button type="button" class="btn btn-info btn-flat dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <div class="dropdown-menu" role="menu">
+                                                <a class="dropdown-item" href="{{route('empresas.edit',Crypt::encryptString($usuario->id))}}"><i class="fas fa-user-edit"></i> Editar</a>
+                                                <div class="dropdown-divider"></div>
 
 
-                                                <a class="dropdown-item"
-                                                    href="#"><i
-                                                        class="fas fa-user-edit"></i> Editar</a>
+                                                <a class="dropdown-item" data-target="#modal-destroy-{{$usuario->id}}" data-toggle="modal"><i class="fas fa-user-times"></i> Eliminar</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-target="#modal-destroy-{{$usuario->id}}"
-                                                    data-toggle="modal"><i class="fas fa-user-times"></i> Eliminar</a>
-                                                <div class="dropdown-divider"></div>
+
                                             </div>
                                         </div>
                                     </center>

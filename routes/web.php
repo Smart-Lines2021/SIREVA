@@ -36,6 +36,15 @@ Route::get('usuarios/empresas/{id}', 'Empresas\EmpresaController@listadoUsuarios
 
 Route::get('usuarios/empresas/create/{id}', 'Empresas\EmpresaController@createUsuarioEmpresa')->name('empresas.usuarios.create');
 
+Route::get('empresas/usuarios/admin', 'Admin\UserController@createUsuarioEmpresa')->name('create.usuarios.empresas');
+
 Route::get('candidatos/empresas/{id}', 'Empresas\EmpresaController@createCandidatoEmpresa')->name('candidatos.empresas');
 
 Route::get('/', 'HomeController@index')->name('home');
+
+
+Route::post('empresas/usuarios/admin', 'Admin\UserController@store2')->name('store.usuarios.empresas');
+
+Route::get('admin/usuarios/por/empresas/{id}','Admin\UserController@createUsuarioPorEmpresa')->name('admin.usuarios.por.empresas');
+
+Route::post('usuarios/empresa/admin', 'Admin\UserController@store3')->name('store3.usuarios.empresas');

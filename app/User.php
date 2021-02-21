@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Empresa\Candidato;
 use App\Empresa\Empresa;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,6 +46,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Empresa::class,'empresa_id','id',);
     }
+
+    public function canditato()
+    {
+        return $this->HasMany(Candidato::class,'user_id','id',);
+    }
+
 
 
     public function roles()

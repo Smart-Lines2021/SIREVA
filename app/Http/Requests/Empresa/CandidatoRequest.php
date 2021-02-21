@@ -40,6 +40,7 @@ class CandidatoRequest extends FormRequest
             'afiliacion_id' => 'required',
             'tipo_candidato_id' => 'required',
             'sexo_id' => 'required',
+            'user_id' => 'required',
         ];
     }
 
@@ -69,6 +70,7 @@ class CandidatoRequest extends FormRequest
             'afiliacion_id.required' => 'Afiliacion es un campo requerido',
             'tipo_candidato_id.required' => 'Tipo de candidato es un campo requerido',
             'sexo_id.required' => 'Sexo es un campo requerido',
+            'user_id.required' => 'Sexo es un campo requerido',
            
         ];
     }

@@ -39,6 +39,8 @@ Route::get('usuarios/empresas/create/{id}', 'Empresas\EmpresaController@createUs
 Route::get('empresas/usuarios/admin', 'Admin\UserController@createUsuarioEmpresa')->name('create.usuarios.empresas');
 
 Route::get('candidatos/empresas/{id}', 'Empresas\EmpresaController@createCandidatoEmpresa')->name('candidatos.empresas');
+Route::get('candidatos/empresas//usuario', 'Empresas\CandidatoController@candidatoEmpresaPorUsuario')->name('listado.candidatos.por.usuario');
+
 
 Route::get('/', 'HomeController@index')->name('home');
 

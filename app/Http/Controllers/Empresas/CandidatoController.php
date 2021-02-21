@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use App\Empresa\Empresa;
 use App\Http\Requests\Empresa\CandidatoRequest;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Auth;
 class CandidatoController extends Controller
 {
 
@@ -80,6 +81,15 @@ class CandidatoController extends Controller
     public function show($id)
     {
         //
+    }
+
+
+    public function candidatoEmpresaPorUsuario(){
+       
+        $id=Auth::user()->empresa->id;
+        $empresa = Empresa::findOrFail($id);
+        $candidatos = Candidato::where('activo','=',1)->where('empresa_id','=',$id)->where('user_id','=',Auth::user()->id)->get();
+        return view('empresas.empresas.show', compact('candidatos', 'empresa'));
     }
 
     /**

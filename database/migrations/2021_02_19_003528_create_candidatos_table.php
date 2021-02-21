@@ -39,6 +39,10 @@ class CreateCandidatosTable extends Migration
             $table->foreign('sexo_id')->references('id')->on('sexos');
 
 
+            $table->BigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
+
             $table->boolean('activo')->default(1);
             $table->timestamps();
         });

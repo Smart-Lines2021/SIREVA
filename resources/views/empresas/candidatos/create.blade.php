@@ -24,10 +24,12 @@
                     @csrf
                     <input type="hidden" name="empresa_id" value="{{$empresa->id}}">
                     <div class="row">
-                        
+
                         <div class="form-group col-md-3">
                             <label for="curp">CURP:</label>
-                            <input type="text" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" name="curp" value="{{old('curp')}}" class="form-control"
+                            <input type="text"
+                                pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$"
+                                name="curp" value="{{old('curp')}}" class="form-control"
                                 placeholder="Ingrese curp con el formato correcto" required minlegth="1" maxlength="18"
                                 title="Ejemplo: SAGA940416MZSNRN08">
                         </div>
@@ -59,8 +61,8 @@
                         <div class="form-group col-md-4">
                             <label for="estado">Estado</label>
 
-                            <select class="form-control select2" id="estados" 
-                                data-placeholder="Seleccione un Estado"  style="width: 100%;"  name="estado" required>
+                            <select class="form-control select2" id="estados" data-placeholder="Seleccione un Estado"
+                                style="width: 100%;" name="estado" required>
                                 <option selected="selected" value="">Seleccione un Estado</option>
                                 @foreach ($estados->response->estado as $estado)
                                 <option>{{$estado}}</option>
@@ -126,7 +128,7 @@
                             <div class="form-group">
                                 <label for="numero_interior">Número interior</label>
                                 <input type="text" value="{{old('numero_interior')}}" class="form-control"
-                                    name="numero_interior" minlength="1" maxlength="5" 
+                                    name="numero_interior" minlength="1" maxlength="5"
                                     title="Solamente se aceptan números. Tamaño mínimo: 1. Tamaño máximo: 5."
                                     placeholder="Ingrese número interior del domicilio">
                             </div>
@@ -197,6 +199,9 @@
                             </select>
                         </div>
                     </div>
+
+                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+
 
                     <button class="btn btn-info btn-block">Crear Candidato</button>
                 </form>

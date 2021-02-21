@@ -55,13 +55,36 @@
 
       <li class="nav-item">
         <a href="{{route('candidatos.index')}}" class="nav-link">
-          <i class="nav-icon fas fa-user-tag"></i>
-          <i cla <p>
+          <i class="nav-icon fas fa-store"></i>
+          <p>
             Candidatos
 
             </p>
         </a>
       </li>
+      @else
+
+      <li class="nav-item">
+        <a href="{{route('listado.candidatos.por.usuario')}}" class="nav-link">
+    
+          <i class="nav-icon fas fa-store"></i>
+          <p>
+              Listado usuario logueado
+            </p>
+        </a>
+      </li>
+
+       <li class="nav-item">
+        <a href="{{route('empresas.show',Crypt::encryptString(Auth::user()->empresa->id))}}" class="nav-link">
+          
+          <i class="nav-icon fas fa-store"></i>
+          <p>
+              Listado general
+            </p>
+        </a>
+      </li>
+
+      
 
       @endif
       <li class="nav-item">

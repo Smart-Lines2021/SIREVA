@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Empresas</h1>
+<h1 class="m-0 text-dark">{{$empresa->razon_social}}</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">
@@ -53,7 +53,7 @@
                                         {{$candidato->numero_interior }},
                                     @endif
                                    
-                                    <br>{{$candidato->colonia}}, {{$candidato->municipio}} {{$candidato->estado}}
+                                    <br>{{$candidato->colonia}}, {{$candidato->municipio}}, {{$candidato->estado}}
                                 </td>
                                 <td>{{$candidato->telefono_celular}}</td>
                                 <td>
@@ -82,12 +82,6 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <div class="dropdown-menu" role="menu">
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.show',Crypt::encryptString($empresa->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Candidatos</a>
-                                                <div class="dropdown-divider"></div>
-
 
                                                 <a class="dropdown-item"
                                                     href="{{route('empresas.edit',Crypt::encryptString($empresa->id))}}"><i

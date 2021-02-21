@@ -9,8 +9,9 @@ use App\Admin\TipoCandidato;
 use App\Admin\Sexo;
 use App\Empresa\Candidato;
 use GuzzleHttp\Client;
+use App\Empresa\Empresa;
 use App\Http\Requests\Empresa\CandidatoRequest;
-
+use Illuminate\Support\Facades\Crypt;
 class CandidatoController extends Controller
 {
 
@@ -24,6 +25,7 @@ class CandidatoController extends Controller
      */
     public function index()
     {
+        
         $candidatos = Candidato::where('activo','=',1)->get();
         return view('empresas.candidatos.index',compact('candidatos'));
     }
@@ -60,11 +62,13 @@ class CandidatoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CandidatoRequest $request)
+
     {
         $candidato = Candidato::create($request->validated());
         $candidato->telefono_celular = $request->get('telefono_celular');
+        $candidato->numero_interior = $request->get('numero_interior');
         $candidato->save();
-        return redirect()->route('empresas.index')->with('mensaje', 'Se ha registrado una nuevo candidato');
+        return redirect()->route('empresas.show', Crypt::encryptString($request->empresa_id))->with('mensaje', 'Se ha registrado una nuevo candidato');
     }
 
     /**

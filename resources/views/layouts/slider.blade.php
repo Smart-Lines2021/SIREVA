@@ -17,7 +17,7 @@
          with font-awesome or any other icon font library -->
 
 
-
+    @if(Auth::user()->hasRole('admin'))
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-users-cog"></i>
@@ -53,7 +53,7 @@
       </li>
 
       <li class="nav-item">
-        <a href="../widgets.html" class="nav-link">
+        <a href="{{route('candidatos.index')}}" class="nav-link">
           <i class="nav-icon fas fa-user-tag"></i>
           <i cla
           <p>
@@ -63,7 +63,7 @@
         </a>
       </li>
 
-
+@endif
       <li class="nav-item">
         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

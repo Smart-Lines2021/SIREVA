@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:18',
+            'name' => 'required|max:150',
             'empresa_id' => 'required',
             'password' => 'required',
             'email' => 'required|unique:users', //Obtenemos del parametro de la ruta la id del usuario

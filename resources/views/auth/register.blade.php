@@ -22,7 +22,7 @@
             <div class="card-body" style="display: block;">
                 <form method="POST" action="{{route('admin.usuarios.store')}}">
                     @csrf
-                    <input name="empresa_id" value="{{$empresa->id}}">
+                    <input name="empresa_id" type="hidden" value="{{$empresa->id}}">
                     <div class="form-group">
                         <label for="name">Nombre: </label>
                         <input type="text" name="name" value="{{old('name')}}" class="form-control">
@@ -49,7 +49,7 @@
 
 
 
-                    <button class="btn btn-info btn-block">Crear empresa</button>
+                    <button class="btn btn-info btn-block">Crear Usuario</button>
                 </form>
 
             </div>

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use App\Empresa\Empresa;
+use App\Empresa\Candidato;
 
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('layouts.home');
+      
+        if(Auth::user()->hasRole('admin')){
+            return view('layouts.home');
+        } else {
+            $empresa = Empresa::findOrFail(Auth::user()->empresa->id);
+            $candidatos = Candidato::where('empresa_id', '=', Auth::user()->empresa->id)->where('activo', '=', 1)->get();
+            return view('layouts.home',compact('empresa','candidatos'));
+        }
+        
     }
 }

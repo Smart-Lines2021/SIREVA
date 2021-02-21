@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('administracion/usuarios','Admin\UserController')->parameters(['usuario'=>'usuario'])->names('admin.usuarios');
 
+Route::get('admin/usuarios/empresas','Admin\UserController@usuariosEmpresas')->name('admin.usuarios.empresas');
 
 //Para el perfil
 Route::resource('empresas','Empresas\EmpresaController')->parameters(['empresa'=>'empresa'])->names('empresas');

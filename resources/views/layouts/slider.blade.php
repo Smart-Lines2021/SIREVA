@@ -2,9 +2,8 @@
 <div class="sidebar">
   <!-- Sidebar user panel (optional) -->
   <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <div class="image">
-      <img src="{{ asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
-    </div>
+  
+    
     <div class="info">
       <a href="#" class="d-block">{{auth()->user()->name}}</a>
     </div>
@@ -17,7 +16,7 @@
          with font-awesome or any other icon font library -->
 
 
-    @if(Auth::user()->hasRole('admin'))
+      @if(Auth::user()->hasRole('admin'))
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-users-cog"></i>
@@ -30,20 +29,22 @@
           <li class="nav-item">
             <a href="{{route('admin.usuarios.index')}}" class="nav-link">
               <i class="fas fa-users"></i>
-              <p>Usuarios</p>
+              <p>Usuarios SEZAC</p>
             </a>
           </li>
+
           <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="fas fa-user-tag"></i>
-              <p>Roles</p>
-            </a>
+              <a href="{{route('admin.usuarios.empresas')}}" class="nav-link">
+                <i class="fas fa-users"></i>
+                <p>Usuarios Empresas</p>
+              </a>
           </li>
+
         </ul>
       </li>
 
       <li class="nav-item">
-          <a href="{{route('empresas.index')}}" class="nav-link">
+        <a href="{{route('empresas.index')}}" class="nav-link">
           <i class="nav-icon fas fa-store"></i>
           <p>
             Empresas
@@ -55,15 +56,14 @@
       <li class="nav-item">
         <a href="{{route('candidatos.index')}}" class="nav-link">
           <i class="nav-icon fas fa-user-tag"></i>
-          <i cla
-          <p>
+          <i cla <p>
             Candidatos
 
-          </p>
+            </p>
         </a>
       </li>
 
-@endif
+      @endif
       <li class="nav-item">
         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -78,4 +78,6 @@
     </ul>
   </nav>
   <!-- /.sidebar-menu -->
+
+ 
 </div>

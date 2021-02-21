@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Crear Usuario</h1>
+<h1 class="m-0 text-dark">Crear Usuario SEZAC</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">
@@ -22,7 +22,8 @@
             <div class="card-body" style="display: block;">
                 <form method="POST" action="{{route('admin.usuarios.store')}}">
                     @csrf
-                    <input name="empresa_id" type="hidden" value="{{$empresa->id}}">
+
+
                     <div class="form-group">
                         <label for="name">Nombre: </label>
                         <input type="text" name="name" value="{{old('name')}}" class="form-control">
@@ -45,8 +46,10 @@
                                 Contraseña</button>
                         </div>
                     </div>
+                    @if(Auth::user()->hasRole('admin'))
+                    <input type="hidden" name="empresa_id" value="1">
+                    @endif
                     
-
 
 
                     <button class="btn btn-info btn-block">Crear Usuario</button>
@@ -59,7 +62,8 @@
 @endsection
 @push('styles')
 {{-- Incluimos los links del diseño de la tabla de un solo archivo --}}
-
+{{-- Incluimos css de select2 --}}
+<link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 @endpush
 @push('scripts')
 {{-- Incluimos los scripts de la tabla de un solo archivo --}}
@@ -68,5 +72,27 @@
     function rellenarPassword(){
         document.getElementById('password').value=getPassword();
     }
+
+    $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    $("#roles").on('change', function() {
+        var selectValue = $(this).val();
+        if(selectValue=== "2"){
+            $("#divempresa").show();
+            $("#empresa_input").hide();
+            $('#empresas').prop('required',true);
+        } else{
+            $("#divempresa").hide();
+            $('#roles').prop('required',false);
+        }
+    }).change();
+
+});
+
+    
 </script>
+<script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}">
+    </script
 @endpush

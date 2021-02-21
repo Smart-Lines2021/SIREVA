@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Role;
+use App\Empresa\Empresa;
 
 class UserController extends Controller
 {
@@ -23,8 +25,14 @@ class UserController extends Controller
     
     public function index()
     {
-          $usuarios = User::where('activo','=',1)->get();
+          $usuarios = User::where('activo','=',1)->where('empresa_id','=',1)->get();
           return view('admin.usuarios.index',compact('usuarios'));
+    }
+
+    public function usuariosEmpresas()
+    {
+        $usuarios = User::where('activo','=',1)->where('empresa_id','>',1)->get();
+        return view('admin.usuarios.index',compact('usuarios'));
     }
 
     /**
@@ -34,7 +42,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $empresas= Empresa::where('activo','=',1)->where('id','>',1)->get();
+        $roles= Role::get();
+        return view('auth.register',compact('empresas','roles'));
     }
 
     /**
@@ -44,11 +54,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
-    {
+    {   
         $usuario = User::create($request->validated());
         $usuario->password=Hash::make($request->get('password'));
         $usuario->save();
-        $usuario->roles()->attach(2);
+        $usuario->roles()->attach(1);
+        
         //asignamos roles
       
         return redirect()->route('admin.usuarios.index')->with('mensaje','Se ha creado un nuevo usuario');

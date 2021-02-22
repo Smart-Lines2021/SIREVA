@@ -207,7 +207,14 @@ class CandidatoController extends Controller
         $candidato->numero_interior = $request->get('numero_interior');
         $candidato->save();
       
-        return  redirect()->route('empresas.show',Crypt::encryptString($request->get('empresa_id')))->with('mensaje','Se ha actualizado el candidato');
+       
+        
+     
+        $id=Auth::user()->empresa->id;
+        $empresa = Empresa::findOrFail($id);
+        $candidatos = Candidato::where('activo','=',1)->where('empresa_id','=',$id)->where('user_id','=',Auth::user()->id)->get();
+        return view('empresas.empresas.show', compact('candidatos', 'empresa'));
+
         
     }
 

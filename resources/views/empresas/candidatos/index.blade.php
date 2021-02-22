@@ -82,15 +82,11 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <div class="dropdown-menu" role="menu">
-
+                                                @php
+                                           
+                                                @endphp
                                                 <a class="dropdown-item"
-                                                    href="{{route('empresas.show',Crypt::encryptString($candidato->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Candidatos</a>
-                                                <div class="dropdown-divider"></div>
-
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.edit',Crypt::encryptString($candidato->id))}}"><i
+                                                    href="{{route('candidatos.edit',Crypt::encryptString($candidato->id))}}"><i
                                                         class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-target="#modal-destroy-{{$candidato->id}}"

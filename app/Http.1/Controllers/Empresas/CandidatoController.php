@@ -194,22 +194,5 @@ class CandidatoController extends Controller
         compact('afiliaciones', 'tipos_de_candidatos', 'sexos','candidato','estados'));
     }
 
-    public function updatePorUsuario(CandidatoRequest $request, $id){
-        
-        $id=Crypt::decryptString($id);
-
-    
-        $candidato=Candidato::findOrFail($id);
-        
-         //Aplicamos Politica de Acceso al metodo correspondiente
-        $candidato->update($request->validated());
-        $candidato->telefono_celular = $request->get('telefono_celular');
-        $candidato->numero_interior = $request->get('numero_interior');
-        $candidato->save();
-      
-        return  redirect()->route('empresas.show',Crypt::encryptString($request->get('empresa_id')))->with('mensaje','Se ha actualizado el candidato');
-        
-    }
-
 
 }

@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Carlos Alberto Trejo Palacios';
-        $user->email = 'carlos.trejo@zacatecas.gob.mx ';
+        $user->email = 'carlos.trejo@zacatecas.gob.mx';
         $user->password = bcrypt('EVFo2wCEJyQ6');
         $user->empresa_id = 1;
         $user->save();

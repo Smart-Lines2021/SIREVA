@@ -89,7 +89,7 @@
                                             <div class="dropdown-menu" role="menu">
 
                                                 <a class="dropdown-item"
-                                                    href="{{route('candidatos.edit',Crypt::encryptString($candidato->id))}}"><i
+                                                    href="{{route('edit.candidatos.por.usuario',Crypt::encryptString($candidato->id))}}"><i
                                                         class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-target="#modal-destroy-{{$candidato->id}}"

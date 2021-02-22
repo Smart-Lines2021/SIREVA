@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Exports\Admin\CandidatoExport;
+use Maatwebsite\Excel\Facades\Excel;
+ 
+Route::get('/excel', function () {
+    return Excel::download(new CandidatoExport, 'candidatos.xlsx');
+});
 
 
 /*Auth::routes();*/
@@ -61,3 +67,6 @@ Route::put('candidatos/{id}/usuario/edit', 'Empresas\CandidatoController@updateP
 
 Route::get('candidatos/usuarios/edit/{id}', 'Admin\UserController@edit3')->name('edit.usuarios.por.empresa');
 
+Route::get('/excel', function () {
+    return (new ProductsExport)->download('products.tsv', \Maatwebsite\Excel\Excel::TSV);
+});

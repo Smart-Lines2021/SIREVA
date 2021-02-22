@@ -77,7 +77,7 @@ class UserController extends Controller
         //
     }
 
-    /**
+     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -85,8 +85,35 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $usuario=User::findOrFail($id);
+        //Aplicamos Politica de Acceso al metodo correspondiente
+        return view('admin.usuarios.edit',compact('usuario'));
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit2($id)
+    {
+        $id=Crypt::decryptString($id);
+        $usuario=User::findOrFail($id);
+        $empresas= Empresa::where('activo','=',1)->where('id','>',1)->get();
+        //Aplicamos Politica de Acceso al metodo correspondiente
+        return view('admin.usuarios.edit',compact('usuario','empresas'));
+    }
+
+    public function edit3($id)
+    {
+        $id=Crypt::decryptString($id);
+        $usuario=User::findOrFail($id);
+        //Aplicamos Politica de Acceso al metodo correspondiente
+        return view('admin.usuarios.edit3',compact('usuario',));
+    }
+
 
     /**
      * Update the specified resource in storage.

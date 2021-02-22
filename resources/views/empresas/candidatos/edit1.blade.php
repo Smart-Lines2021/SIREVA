@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="card-body" style="display: block;">
-                <form method="POST" action="{{route('candidatos.update',Crypt::encryptString($candidato->id))}}">
+                <form method="POST" action="{{route('candidato.por.usuario.update',Crypt::encryptString($candidato->id))}}">
                     @csrf
                        @method('PUT')
                     <input type="hidden" name="empresa_id" value="{{$candidato->empresa_id}}">

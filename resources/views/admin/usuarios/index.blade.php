@@ -61,7 +61,7 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <div class="dropdown-menu" role="menu">
-                                                <a class="dropdown-item" href="{{route('empresas.edit',Crypt::encryptString($usuario->id))}}"><i class="fas fa-user-edit"></i> Editar</a>
+                                                <a class="dropdown-item" href="{{route('admin.usuarios.edit',Crypt::encryptString($usuario->id))}}"><i class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
 
 

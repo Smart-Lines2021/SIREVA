@@ -87,7 +87,10 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $empresa=Empresa::findOrFail($id);
+        //Aplicamos Politica de Acceso al metodo correspondiente
+        return view('empresas.empresas.edit',compact('empresa'));
     }
 
     /**
@@ -97,9 +100,16 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmpresaRequest $request, $id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $empresa=Empresa::findOrFail($id);
+        $empresa->update($request->validated());
+        $empresa->telefono = $request->get('telefono');
+        $empresa->correo = $request->get('correo');
+        $empresa->domicilio = $request->get('domicilio');
+        $empresa->save();
+        return redirect()->route('empresas.index')->with('mensaje', 'Se ha editado  empresa');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Empresa;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CandidatoRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class CandidatoRequest extends FormRequest
     public function rules()
     {
 
-       
+
         $rules = [
             'curp' => 'required|max:18|unique:candidatos',
             'nombre' => 'required|string|max:100',
@@ -46,7 +47,7 @@ class CandidatoRequest extends FormRequest
         ];
         if ($this->method() === 'PUT') { //Si es para actualizar
             $rules = [
-                'curp' => ['required','max:18', Rule::unique('users')->ignore($this->user->id)],
+                'curp' => ['required','max:18', Rule::unique('candidatos')->ignore($this->request->get('id'))],
                 'nombre' => 'required|string|max:100',
                 'apellido_paterno' => 'required|string|max:100',
                 'apellido_materno' => 'string|max:100',
@@ -66,6 +67,7 @@ class CandidatoRequest extends FormRequest
             ];
         }
         return $rules;
+
     }
 
     public function messages()

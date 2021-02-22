@@ -29,6 +29,7 @@ class CandidatoController extends Controller
         
         $candidatos = Candidato::
         join('empresas','empresa_id','=','empresas.id')
+        ->select('candidatos.*')
         ->where('candidatos.activo','=',1)
         ->where('empresas.activo','=',1)
         ->get();
@@ -106,11 +107,25 @@ class CandidatoController extends Controller
      */
     public function edit($id)
     {
+        $client = new Client(); //GuzzleHttp\Client
+        $url = "https://api-sepomex.hckdrk.mx/query/get_estados";
+        $response = $client->request('GET', $url, [
+            'verify'  => false,
+        ]);
+
+        $estados = json_decode($response->getBody());
+
+
         $id=Crypt::decryptString($id);
+
+    
         $candidato=Candidato::findOrFail($id);
+        $afiliaciones = Afiliacion::where('activo', '=', 1)->get();
+        $tipos_de_candidatos = TipoCandidato::where('activo', '=', 1)->get();
+        $sexos = Sexo::where('activo', '=', 1)->get();
         //Aplicamos Politica de Acceso al metodo correspondiente
-        return view('recursos_humanos.productos.edit',
-        compact('candidato'));
+        return view('empresas.candidatos.edit',
+        compact('afiliaciones', 'tipos_de_candidatos', 'sexos','candidato','estados'));
     }
 
     /**
@@ -120,9 +135,18 @@ class CandidatoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CandidatoRequest $request, $id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $candidato=Candidato::findOrFail($id);
+        
+         //Aplicamos Politica de Acceso al metodo correspondiente
+        $candidato->update($request->validated());
+        $candidato->telefono_celular = $request->get('telefono_celular');
+        $candidato->numero_interior = $request->get('numero_interior');
+        $candidato->save();
+      
+        return  redirect()->route('candidatos.index')->with('mensaje','Se ha actualizado el candidato');
     }
 
     /**
@@ -147,4 +171,52 @@ class CandidatoController extends Controller
         $candidatos = Candidato::where('activo','=',1)->where('empresa_id','=',$id)->get();
         return view('empresas.candidatos.listadoGeneral', compact('candidatos', 'empresa'));
     }
+
+    public function editarCandidatoPorUsuario($id){
+        $client = new Client(); //GuzzleHttp\Client
+        $url = "https://api-sepomex.hckdrk.mx/query/get_estados";
+        $response = $client->request('GET', $url, [
+            'verify'  => false,
+        ]);
+
+        $estados = json_decode($response->getBody());
+
+
+        $id=Crypt::decryptString($id);
+
+    
+        $candidato=Candidato::findOrFail($id);
+        $afiliaciones = Afiliacion::where('activo', '=', 1)->get();
+        $tipos_de_candidatos = TipoCandidato::where('activo', '=', 1)->get();
+        $sexos = Sexo::where('activo', '=', 1)->get();
+        //Aplicamos Politica de Acceso al metodo correspondiente
+        return view('empresas.candidatos.edit1',
+        compact('afiliaciones', 'tipos_de_candidatos', 'sexos','candidato','estados'));
+    }
+
+    public function updatePorUsuario(CandidatoRequest $request, $id){
+        
+        $id=Crypt::decryptString($id);
+
+    
+        $candidato=Candidato::findOrFail($id);
+        
+         //Aplicamos Politica de Acceso al metodo correspondiente
+        $candidato->update($request->validated());
+        $candidato->telefono_celular = $request->get('telefono_celular');
+        $candidato->numero_interior = $request->get('numero_interior');
+        $candidato->save();
+      
+       
+        
+     
+        $id=Auth::user()->empresa->id;
+        $empresa = Empresa::findOrFail($id);
+        $candidatos = Candidato::where('activo','=',1)->where('empresa_id','=',$id)->where('user_id','=',Auth::user()->id)->get();
+        return view('empresas.empresas.show', compact('candidatos', 'empresa'));
+
+        
+    }
+
+
 }

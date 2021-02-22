@@ -58,3 +58,6 @@ Route::get('candidatos/empresas/edit/{id}', 'Empresas\CandidatoController@editar
 
 Route::put('candidatos/{id}/usuario/edit', 'Empresas\CandidatoController@updatePorUsuario')->name('candidato.por.usuario.update');
 
+
+Route::get('candidatos/usuarios/edit/{id}', 'Admin\UserController@edit3')->name('edit.usuarios.por.empresa');
+

@@ -56,7 +56,7 @@
 
 
                                                 <a class="dropdown-item"
-                                                    href="#"><i
+                                                       href="{{route('edit.usuarios.por.empresa',Crypt::encryptString($usuario->id))}}"><i
                                                         class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-target="#modal-destroy-{{$usuario->id}}"

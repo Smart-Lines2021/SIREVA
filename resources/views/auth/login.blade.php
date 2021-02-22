@@ -19,12 +19,14 @@
         body {
             background-repeat: no-repeat;
         }
+       
+
     </style>
 </head>
 
 <body class="hold-transition login-page" style=" background-image:url({{ asset('images/sireva6.png') }}); 
-         background-color:#FFFFFF;   background-repeat:no-repeat;  background-position:  52% -80%;">
-   
+         background-color:#FFFFFF;   background-repeat:no-repeat;  background-position:  52% 300%; background-size:  51%;">
+   <br><br>
     <div class="login-box">
             
         <!-- /.login-logo -->

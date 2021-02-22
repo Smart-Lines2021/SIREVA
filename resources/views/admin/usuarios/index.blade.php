@@ -27,8 +27,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Correo</th>
                                 <th>Empresa</th>
+                                <th>Correo</th>
                                 <th>Tipo de Usuario</th>
                                 <td>Opciones</td>
                             </tr>

@@ -27,7 +27,12 @@ class CandidatoController extends Controller
     public function index()
     {
         
-        $candidatos = Candidato::where('activo','=',1)->get();
+        $candidatos = Candidato::
+        join('empresas','empresa_id','=','empresas.id')
+        ->where('candidatos.activo','=',1)
+        ->where('empresas.activo','=',1)
+        ->get();
+
         return view('empresas.candidatos.index',compact('candidatos'));
     }
 
@@ -90,6 +95,7 @@ class CandidatoController extends Controller
         $empresa = Empresa::findOrFail($id);
         $candidatos = Candidato::where('activo','=',1)->where('empresa_id','=',$id)->where('user_id','=',Auth::user()->id)->get();
         return view('empresas.empresas.show', compact('candidatos', 'empresa'));
+
     }
 
     /**
@@ -100,7 +106,11 @@ class CandidatoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $candidato=Candidato::findOrFail($id);
+        //Aplicamos Politica de Acceso al metodo correspondiente
+        return view('recursos_humanos.productos.edit',
+        compact('candidato'));
     }
 
     /**
@@ -123,6 +133,18 @@ class CandidatoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $candidato=Candidato::findOrFail($id);
+         //Aplicamos Politica de Acceso al metodo correspondiente
+        $candidato->activo=0;
+        $candidato->update();
+        return back()->with('mensaje','Se ha eliminado el candidato');
+    }
+
+    public function listadoGeneralCandidatoPorEmpresa(){
+        $id=Auth::user()->empresa->id;
+        $empresa = Empresa::findOrFail($id);
+        $candidatos = Candidato::where('activo','=',1)->where('empresa_id','=',$id)->get();
+        return view('empresas.candidatos.listadoGeneral', compact('candidatos', 'empresa'));
     }
 }

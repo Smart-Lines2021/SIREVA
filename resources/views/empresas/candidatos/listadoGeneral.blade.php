@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-<h1 class="m-0 text-dark">Empresas</h1>
+<h1 class="m-0 text-dark">{{$empresa->razon_social}}</h1>
 @endsection
 @section('content-header')
 <ol class="breadcrumb float-sm-right">
@@ -15,8 +15,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Candidatos Registrados </h3>
-                    <a href="#" class="btn btn-secondary float-right">
+                    <h3 class="card-title">Candidatos Registrados de la empresa {{$empresa->razon_social}}</h3>
+                    <a href="{{route('candidatos.empresas',Crypt::encryptString($empresa->id))}}" class="btn btn-secondary float-right">
                         <i class="fa fa-plus"></i> Añadir Candidato
                     </a>
                 </div>
@@ -34,7 +34,7 @@
                                 <th>Correo</th>
                                 <th>Afiliación</th>
                                 <th>Tipo de Candidato</th>
-                                <th>Opciones</th>
+                                <th>Usuario Registro</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
                                         {{$candidato->numero_interior }},
                                     @endif
                                    
-                                    <br>{{$candidato->colonia}}, {{$candidato->municipio}} {{$candidato->estado}}
+                                    <br>{{$candidato->colonia}}, {{$candidato->municipio}}, {{$candidato->estado}}
                                 </td>
                                 <td>{{$candidato->telefono_celular}}</td>
                                 <td>
@@ -71,37 +71,13 @@
                                 <td>
                                     {{$candidato->tipo_candidato->nombre}}
                                 </td>
-
                                 <td>
-                                    <center>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info btn-flat">Opciones</button>
-                                            <button type="button"
-                                                class="btn btn-info btn-flat dropdown-toggle dropdown-icon"
-                                                data-toggle="dropdown">
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <div class="dropdown-menu" role="menu">
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.show',Crypt::encryptString($candidato->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Candidatos</a>
-                                                <div class="dropdown-divider"></div>
-
-
-                                                <a class="dropdown-item"
-                                                    href="{{route('empresas.edit',Crypt::encryptString($candidato->id))}}"><i
-                                                        class="fas fa-user-edit"></i> Editar</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-target="#modal-destroy-{{$candidato->id}}"
-                                                    data-toggle="modal"><i class="fas fa-user-times"></i> Eliminar</a>
-                                                <div class="dropdown-divider"></div>
-                                            </div>
-                                        </div>
-                                    </center>
+                                {{$candidato->user->name}}
                                 </td>
+
+                              
                             </tr>
-                            @include('empresas.candidatos.destroy')
+      
                             @endforeach
                         </tbody>
                     </table>

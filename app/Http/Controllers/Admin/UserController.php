@@ -108,7 +108,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $usuario=User::findOrFail($id);
+         //Aplicamos Politica de Acceso al metodo correspondiente
+        $usuario->activo=0;
+        $usuario->update();
+        return back()->with('mensaje','Se ha eliminado usuario');
     }
 
     public function createUsuarioEmpresa()

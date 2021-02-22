@@ -75,7 +75,7 @@
       </li>
 
        <li class="nav-item">
-        <a href="{{route('empresas.show',Crypt::encryptString(Auth::user()->empresa->id))}}" class="nav-link">
+        <a href="{{route('admin.candidatos.por.empresas')}}" class="nav-link">
           
           <i class="nav-icon fas fa-store"></i>
           <p>

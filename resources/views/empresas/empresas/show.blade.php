@@ -34,7 +34,9 @@
                                 <th>Correo</th>
                                 <th>Afiliación</th>
                                 <th>Tipo de Candidato</th>
+                                <th>Usuario Registro</th>
                                 <th>Opciones</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -71,6 +73,9 @@
                                 <td>
                                     {{$candidato->tipo_candidato->nombre}}
                                 </td>
+                                <td>
+                                {{$candidato->user->name}}
+                                </td>
 
                                 <td>
                                     <center>
@@ -84,10 +89,10 @@
                                             <div class="dropdown-menu" role="menu">
 
                                                 <a class="dropdown-item"
-                                                    href="{{route('empresas.edit',Crypt::encryptString($empresa->id))}}"><i
+                                                    href="{{route('candidatos.edit',Crypt::encryptString($candidato->id))}}"><i
                                                         class="fas fa-user-edit"></i> Editar</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-target="#modal-destroy-{{$empresa->id}}"
+                                                <a class="dropdown-item" data-target="#modal-destroy-{{$candidato->id}}"
                                                     data-toggle="modal"><i class="fas fa-user-times"></i> Eliminar</a>
                                                 <div class="dropdown-divider"></div>
                                             </div>
@@ -95,7 +100,7 @@
                                     </center>
                                 </td>
                             </tr>
-                            @include('empresas.empresas.destroy')
+                            @include('empresas.candidatos.destroy')
                             @endforeach
                         </tbody>
                     </table>

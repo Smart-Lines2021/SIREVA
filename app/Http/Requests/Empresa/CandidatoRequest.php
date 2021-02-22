@@ -23,7 +23,9 @@ class CandidatoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+
+       
+        $rules = [
             'curp' => 'required|max:18|unique:candidatos',
             'nombre' => 'required|string|max:100',
             'apellido_paterno' => 'required|string|max:100',
@@ -42,6 +44,28 @@ class CandidatoRequest extends FormRequest
             'sexo_id' => 'required',
             'user_id' => 'required',
         ];
+        if ($this->method() === 'PUT') { //Si es para actualizar
+            $rules = [
+                'curp' => ['required','max:18', Rule::unique('users')->ignore($this->user->id)],
+                'nombre' => 'required|string|max:100',
+                'apellido_paterno' => 'required|string|max:100',
+                'apellido_materno' => 'string|max:100',
+                'estado' => 'required',
+                'municipio' => 'required',
+                'codigo_postal' => 'required',
+                'colonia' => 'required',
+                'calle' => 'required',
+                'correo' => 'required',
+                'numero_exterior' => 'required',
+                'telefono_celular' => 'required',
+                'empresa_id' => 'required',
+                'afiliacion_id' => 'required',
+                'tipo_candidato_id' => 'required',
+                'sexo_id' => 'required',
+                'user_id' => 'required',
+            ];
+        }
+        return $rules;
     }
 
     public function messages()
@@ -71,7 +95,7 @@ class CandidatoRequest extends FormRequest
             'tipo_candidato_id.required' => 'Tipo de candidato es un campo requerido',
             'sexo_id.required' => 'Sexo es un campo requerido',
             'user_id.required' => 'Sexo es un campo requerido',
-           
+
         ];
     }
 }

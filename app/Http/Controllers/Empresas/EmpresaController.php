@@ -110,7 +110,12 @@ class EmpresaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id=Crypt::decryptString($id);
+        $empresa=Empresa::findOrFail($id);
+         //Aplicamos Politica de Acceso al metodo correspondiente
+        $empresa->activo=0;
+        $empresa->update();
+        return back()->with('mensaje','Se ha eliminado empesa');
     }
 
     public function listadoUsuarios($id)

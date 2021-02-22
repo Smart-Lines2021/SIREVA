@@ -49,4 +49,7 @@ Route::post('empresas/usuarios/admin', 'Admin\UserController@store2')->name('sto
 
 Route::get('admin/usuarios/por/empresas/{id}','Admin\UserController@createUsuarioPorEmpresa')->name('admin.usuarios.por.empresas');
 
+Route::get('admin/candidato/por/empresa','Empresas\CandidatoController@listadoGeneralCandidatoPorEmpresa')->name('admin.candidatos.por.empresas');
+
+
 Route::post('usuarios/empresa/admin', 'Admin\UserController@store3')->name('store3.usuarios.empresas');

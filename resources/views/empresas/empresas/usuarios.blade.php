@@ -67,7 +67,7 @@
                                     </center>
                                 </td>
                             </tr>
-                            @include('empresas.empresas.destroy')
+                            @include('admin.usuarios.destroy')
                             @endforeach
                         </tbody>
                     </table>

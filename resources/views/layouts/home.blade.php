@@ -18,7 +18,7 @@
         <!-- small box -->
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{{$numeroDeEmpresas}}</h3>
                 <p>Empresas Registradas</p>
             </div>
             <div class="icon">
@@ -32,8 +32,7 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px"></sup></h3>
-
+            <h3>{{$numeroDeCandidatos}}<sup style="font-size: 20px"></sup></h3>
                 <p>Candidatos Registrados</p>
             </div>
             <div class="icon">

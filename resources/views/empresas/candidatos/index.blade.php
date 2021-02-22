@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Candidatos Registrados </h3>
-                    <a href="{{route('excel')}}" class="btn btn-secondary float-right">
+                    <a href="{{route('candidatos.index')}}" class="btn btn-secondary float-right">
                         <i class="fa fa-plus"></i> Descargar Candidato
                     </a>
                 </div>
